@@ -9,13 +9,16 @@
 	<parent>
 		<groupId>org.apache.manifoldcf</groupId>
 		<artifactId>mcf-sdk</artifactId>
-		<version>0.0.4</version>
+		<version>0.0.5</version>
 	</parent>
 
 	<properties>
 
 		<docker.tomcat.port.external>8345</docker.tomcat.port.external>
 		<docker.tomcat.port.internal>8345</docker.tomcat.port.internal>
+		
+		<docker.debug.port.external>5005</docker.debug.port.external>
+		<docker.debug.port.internal>5005</docker.debug.port.internal>
 
 		<docker.mcf.database.port.internal>5432</docker.mcf.database.port.internal>
 		<docker.mcf.database.port.external>5432</docker.mcf.database.port.external>
@@ -144,6 +147,7 @@
 								</network>
 								<ports>
 									<port>${docker.tomcat.port.external}:${docker.tomcat.port.internal}</port>
+									<port>${docker.debug.port.external}:${docker.debug.port.internal}</port>
 								</ports>
 								<wait>
 									<http>
@@ -232,7 +236,120 @@
 					</plugins>
 				</pluginManagement>
 			</build>
-
+		</profile>
+		<profile>
+			<id>local</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<artifactId>maven-resources-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>copy-and-filter-docker-resources</id>
+								<phase>package</phase>
+								<goals>
+									<goal>copy-resources</goal>
+								</goals>
+								<configuration>
+									<outputDirectory>${project.parent.basedir}/target</outputDirectory>
+									<resources>
+										<resource>
+											<directory>src/main/docker/local</directory>
+											<filtering>true</filtering>
+											<excludes>
+												<exclude>**/*.jar</exclude>
+												<exclude>**/*.so</exclude>
+												<exclude>**/*.gz</exclude>
+											</excludes>
+										</resource>
+									</resources>
+								</configuration>
+							</execution>
+							<execution>
+								<id>copy-and-filter-docker-resources-non-filtered</id>
+								<phase>package</phase>
+								<goals>
+									<goal>copy-resources</goal>
+								</goals>
+								<configuration>
+									<outputDirectory>${project.parent.basedir}/target</outputDirectory>
+									<resources>
+										<resource>
+											<directory>src/main/docker/local</directory>
+											<filtering>false</filtering>
+											<includes>
+												<include>**/*.jar</include>
+												<include>**/*.so</include>
+												<include>**/*.gz</include>
+											</includes>
+										</resource>
+									</resources>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<id>docker-hub</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<artifactId>maven-resources-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>copy-and-filter-docker-resources</id>
+								<phase>package</phase>
+								<goals>
+									<goal>copy-resources</goal>
+								</goals>
+								<configuration>
+									<outputDirectory>${project.parent.basedir}/target</outputDirectory>
+									<resources>
+										<resource>
+											<directory>src/main/docker/hub</directory>
+											<filtering>true</filtering>
+											<excludes>
+												<exclude>**/*.jar</exclude>
+												<exclude>**/*.so</exclude>
+												<exclude>**/*.gz</exclude>
+											</excludes>
+										</resource>
+									</resources>
+								</configuration>
+							</execution>
+							<execution>
+								<id>copy-and-filter-docker-resources-non-filtered</id>
+								<phase>package</phase>
+								<goals>
+									<goal>copy-resources</goal>
+								</goals>
+								<configuration>
+									<outputDirectory>${project.parent.basedir}/target</outputDirectory>
+									<resources>
+										<resource>
+											<directory>src/main/docker/hub</directory>
+											<filtering>false</filtering>
+											<includes>
+												<include>**/*.jar</include>
+												<include>**/*.so</include>
+												<include>**/*.gz</include>
+											</includes>
+										</resource>
+									</resources>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
 		</profile>
 	</profiles>
 
