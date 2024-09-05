@@ -9,7 +9,7 @@
 	<parent>
 		<groupId>org.apache.manifoldcf</groupId>
 		<artifactId>mcf-sdk</artifactId>
-		<version>0.0.5</version>
+		<version>1.0.0</version>
 	</parent>
 
 	<properties>
@@ -69,48 +69,7 @@
 			<plugin>
 				<artifactId>maven-resources-plugin</artifactId>
 				<executions>
-					<execution>
-						<id>copy-and-filter-docker-resources</id>
-						<phase>package</phase>
-						<goals>
-							<goal>copy-resources</goal>
-						</goals>
-						<configuration>
-							<outputDirectory>${project.parent.basedir}/target</outputDirectory>
-							<resources>
-								<resource>
-									<directory>src/main/docker</directory>
-									<filtering>true</filtering>
-									<excludes>
-										<exclude>**/*.jar</exclude>
-										<exclude>**/*.so</exclude>
-										<exclude>**/*.gz</exclude>
-									</excludes>
-								</resource>
-							</resources>
-						</configuration>
-					</execution>
-					<execution>
-						<id>copy-and-filter-docker-resources-non-filtered</id>
-						<phase>package</phase>
-						<goals>
-							<goal>copy-resources</goal>
-						</goals>
-						<configuration>
-							<outputDirectory>${project.parent.basedir}/target</outputDirectory>
-							<resources>
-								<resource>
-									<directory>src/main/docker</directory>
-									<filtering>false</filtering>
-									<includes>
-										<include>**/*.jar</include>
-										<include>**/*.so</include>
-										<include>**/*.gz</include>
-									</includes>
-								</resource>
-							</resources>
-						</configuration>
-					</execution>
+					
 				</executions>
 			</plugin>
 			<plugin>
@@ -257,7 +216,7 @@
 									<outputDirectory>${project.parent.basedir}/target</outputDirectory>
 									<resources>
 										<resource>
-											<directory>src/main/docker/local</directory>
+											<directory>src/main/docker</directory>
 											<filtering>true</filtering>
 											<excludes>
 												<exclude>**/*.jar</exclude>
@@ -278,6 +237,48 @@
 									<outputDirectory>${project.parent.basedir}/target</outputDirectory>
 									<resources>
 										<resource>
+											<directory>src/main/docker</directory>
+											<filtering>false</filtering>
+											<includes>
+												<include>**/*.jar</include>
+												<include>**/*.so</include>
+												<include>**/*.gz</include>
+											</includes>
+										</resource>
+									</resources>
+								</configuration>
+							</execution>
+							<execution>
+								<id>copy-and-filter-docker-resources-local</id>
+								<phase>package</phase>
+								<goals>
+									<goal>copy-resources</goal>
+								</goals>
+								<configuration>
+									<outputDirectory>${project.parent.basedir}/target</outputDirectory>
+									<resources>
+										<resource>
+											<directory>src/main/docker/local</directory>
+											<filtering>true</filtering>
+											<excludes>
+												<exclude>**/*.jar</exclude>
+												<exclude>**/*.so</exclude>
+												<exclude>**/*.gz</exclude>
+											</excludes>
+										</resource>
+									</resources>
+								</configuration>
+							</execution>
+							<execution>
+								<id>copy-and-filter-docker-resources-non-filtered-local</id>
+								<phase>package</phase>
+								<goals>
+									<goal>copy-resources</goal>
+								</goals>
+								<configuration>
+									<outputDirectory>${project.parent.basedir}/target</outputDirectory>
+									<resources>
+										<resource>
 											<directory>src/main/docker/local</directory>
 											<filtering>false</filtering>
 											<includes>
@@ -285,6 +286,23 @@
 												<include>**/*.so</include>
 												<include>**/*.gz</include>
 											</includes>
+										</resource>
+									</resources>
+								</configuration>
+							</execution>
+							<execution>
+								<id>copy-and-filter-docker-compose-resources</id>
+								<phase>package</phase>
+								<goals>
+									<goal>copy-resources</goal>
+								</goals>
+								<configuration>
+									<outputDirectory>${project.parent.basedir}/target/docker-compose</outputDirectory>
+									<resources>
+										<resource>
+											<directory>src/main/docker/docker-compose</directory>
+											<filtering>true</filtering>
+											<include>docker-compose.yml</include>
 										</resource>
 									</resources>
 								</configuration>
@@ -314,7 +332,7 @@
 									<outputDirectory>${project.parent.basedir}/target</outputDirectory>
 									<resources>
 										<resource>
-											<directory>src/main/docker/hub</directory>
+											<directory>src/main/docker</directory>
 											<filtering>true</filtering>
 											<excludes>
 												<exclude>**/*.jar</exclude>
@@ -335,6 +353,48 @@
 									<outputDirectory>${project.parent.basedir}/target</outputDirectory>
 									<resources>
 										<resource>
+											<directory>src/main/docker</directory>
+											<filtering>false</filtering>
+											<includes>
+												<include>**/*.jar</include>
+												<include>**/*.so</include>
+												<include>**/*.gz</include>
+											</includes>
+										</resource>
+									</resources>
+								</configuration>
+							</execution>
+							<execution>
+								<id>copy-and-filter-docker-resources-hub</id>
+								<phase>package</phase>
+								<goals>
+									<goal>copy-resources</goal>
+								</goals>
+								<configuration>
+									<outputDirectory>${project.parent.basedir}/target</outputDirectory>
+									<resources>
+										<resource>
+											<directory>src/main/docker/hub</directory>
+											<filtering>true</filtering>
+											<excludes>
+												<exclude>**/*.jar</exclude>
+												<exclude>**/*.so</exclude>
+												<exclude>**/*.gz</exclude>
+											</excludes>
+										</resource>
+									</resources>
+								</configuration>
+							</execution>
+							<execution>
+								<id>copy-and-filter-docker-resources-non-filtered-hub</id>
+								<phase>package</phase>
+								<goals>
+									<goal>copy-resources</goal>
+								</goals>
+								<configuration>
+									<outputDirectory>${project.parent.basedir}/target</outputDirectory>
+									<resources>
+										<resource>
 											<directory>src/main/docker/hub</directory>
 											<filtering>false</filtering>
 											<includes>
@@ -342,6 +402,23 @@
 												<include>**/*.so</include>
 												<include>**/*.gz</include>
 											</includes>
+										</resource>
+									</resources>
+								</configuration>
+							</execution>
+							<execution>
+								<id>copy-and-filter-docker-compose-resources</id>
+								<phase>package</phase>
+								<goals>
+									<goal>copy-resources</goal>
+								</goals>
+								<configuration>
+									<outputDirectory>${project.parent.basedir}/target/docker-compose</outputDirectory>
+									<resources>
+										<resource>
+											<directory>src/main/docker/docker-compose</directory>
+											<filtering>true</filtering>
+											<include>docker-compose.yml</include>
 										</resource>
 									</resources>
 								</configuration>

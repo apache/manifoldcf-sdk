@@ -1,0 +1,52 @@
+services:
+
+  mcf-current-project:
+    image: mcf-sdk/current-project:development
+    hostname: mcf-current-project
+    networks:
+      - mcf-network
+    build:
+      dockerfile: Dockerfile
+      context: ../../target
+      tags:
+        - "latest"
+        - "${project.version}"
+    ports:
+      - ${docker.tomcat.port.external}:${docker.tomcat.port.internal}
+      - ${docker.debug.port.external}:${docker.debug.port.internal}
+    healthcheck:
+        test: ["CMD", "curl", "-f", "http://localhost:${docker.tomcat.port.external}/mcf-crawler-ui"]
+        interval: 30s
+        timeout: 10s
+        retries: 5  
+    depends_on:
+      mcf-postgres:
+        condition: service_healthy
+  
+  mcf-postgres:
+    image: ${docker.mcf.database.image}
+    hostname: mcf-postgres
+    networks:
+      - mcf-network
+    environment:
+      POSTGRES_HOST_AUTH_METHOD: trust
+      POSTGRES_DB: ${docker.mcf.database.server.db.name}
+      POSTGRES_USER: ${docker.mcf.database.username}
+    ports:
+      - ${docker.mcf.database.port.external}:${docker.mcf.database.port.internal}
+    volumes:
+      - mcf-postgres-volume:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d ${docker.mcf.database.server.db.name} -U ${docker.mcf.database.username}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      
+volumes:
+  mcf-postgres-volume:
+    name: mcf-postgres-volume
+    external: true
+networks:
+  mcf-network:
+    name: mcf-network
+    external: true

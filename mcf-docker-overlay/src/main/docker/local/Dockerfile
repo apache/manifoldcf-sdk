@@ -20,6 +20,7 @@ RUN wget https://dlcdn.apache.org/manifoldcf/apache-manifoldcf-${MCF_VERSION}/ap
 
 COPY connectors.xml ${APP_DIR}
 COPY properties.xml ${APP_DIR}/example
+COPY logging.xml ${APP_DIR}/example
 COPY extensions/mcf-extensions-jar-${project.version}.jar ${APP_DIR}/connector-lib
 
 RUN set -ex; \
