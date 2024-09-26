@@ -1,11 +1,8 @@
-FROM apache/manifoldcf:2.26
+FROM apache/manifoldcf:${manifoldcf.version}
 LABEL maintainer="The Apache ManifoldCF Project"
 
-ARG MCF_VERSION=2.27-RC1
 ARG MCF_USER=manifoldcf
-
 ARG MCF_GROUP=manifoldcf
-
 ARG APP_DIR=/usr/share/manifoldcf
 
 COPY connectors.xml ${APP_DIR}

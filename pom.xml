@@ -3,14 +3,14 @@
 	<groupId>org.apache.manifoldcf</groupId>
 	<artifactId>mcf-sdk</artifactId>
 	<name>Apache ManifoldCF SDK</name>
-	<version>1.0.0</version>
+	<version>1.0.1</version>
 	<packaging>pom</packaging>
 	
 	<properties>
 		<webVersion>4.0</webVersion>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<manifoldcf.version>2.26</manifoldcf.version>
+		<manifoldcf.version>2.27</manifoldcf.version>
 		<maven.enforcer.plugin.version>3.5.0</maven.enforcer.plugin.version>
 		<docker-maven-plugin.version>0.45.0</docker-maven-plugin.version>
 		<maven.compiler.plugin.version>3.13.0</maven.compiler.plugin.version>
