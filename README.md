@@ -1,4 +1,4 @@
-# Apache ManifoldCF SDK 1.0.1
+# Apache ManifoldCF SDK 1.0.2
 This is the SDK project of Apache ManifoldCF dedicated to developers that need to extend the platform with new components, connectors or integrations using Maven and Docker. On the other hand this SDK can be extremely useful also for all the developers who want to contribute to the ManifoldCF project.
 This project has started with an initial contribution by @OpenPj and @binduwavell.
 
@@ -12,9 +12,17 @@ The SDK will take care of the following tasks:
 ManifoldCF SDK is using the ManifoldCF Docker repository:
 [https://hub.docker.com/r/apache/manifoldcf](https://hub.docker.com/r/apache/manifoldcf)
 
+*What's new in v1.0.2* 
+* Now the default ManifoldCF dependencies version is `2.28 GA` (Maven deps and Docker image publicly available)
+* Updated Maven plugins to the latest versions
+* Release artifacts are now signed as required by The ASF
+* Added KEYS for validating all the release artifacts
+* Jetty starting options are now taken from the official Docker images
+
+
 *What's new in v1.0.0* 
 * The Maven profile `docker-hub` now is including a default Console appender for logging to show standard output in Docker Desktop
-* Now the default ManifoldCF dependencies version is `2.27 GA` (publicly available)
+* Now the default ManifoldCF dependencies version is `2.27 GA` (Maven deps and Docker image publicly available)
 * Added run-compose.sh script in order to manage the deployment with a Docker Compose template
 * Added a quick build-and-redeploy functionality in order to recreate only the ManifoldCF container: `./run-compose.sh reload_mcf` 
 
@@ -59,14 +67,11 @@ The initialization command consists of the following arguments:
 * MCF version
 * MCF distribution: ga for GA release and rc for a Release Candidate
 
-Example for initializing ManifoldCF 2.27 GA release:
-* `./run.sh init 2.26 ga`
+Example for initializing ManifoldCF 2.28 GA release:
+* `./run.sh init 2.28 ga`
 
 Example for initializing ManifoldCF 2.27.1 RC release:
-* `./run.sh init 2.27.1 rc`
-
-The initialization process will be executed with the following command:
-* `/run.sh init 2.21 ga`
+* `./run.sh init 2.27 ga`
 
 # Building extensions, overlaying and run Docker
 A Dockerfile and a Docker Compose file is provided in order to build the ManifoldCF container and for running the instance with its own database, a PostgreSQL container.

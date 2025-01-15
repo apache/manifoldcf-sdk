@@ -18,11 +18,11 @@
 
 <configuration>
 
-  <property name="org.apache.manifoldcf.login.name" value="admin" />
-  <property name="org.apache.manifoldcf.login.password" value="admin" />
+  <property name="org.apache.manifoldcf.login.name" value="${manifoldcf.admin.username}" />
+  <property name="org.apache.manifoldcf.login.password" value="${manifoldcf.admin.password}" />
 
   <!-- Version string for UI -->
-  <property name="org.apache.manifoldcf.versionstring" value="2.27"/>
+  <property name="org.apache.manifoldcf.versionstring" value="${manifoldcf.version}"/>
   <!-- Point to the wars and configure Jetty -->
   <property name="org.apache.manifoldcf.crawleruiwarpath" value="../web/war/mcf-crawler-ui.war"/>
   <property name="org.apache.manifoldcf.authorityservicewarpath" value="../web/war/mcf-authority-service.war"/>

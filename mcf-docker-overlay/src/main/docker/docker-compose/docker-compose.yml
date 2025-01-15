@@ -49,4 +49,4 @@ volumes:
 networks:
   mcf-network:
     name: mcf-network
-    external: true
+    external: false

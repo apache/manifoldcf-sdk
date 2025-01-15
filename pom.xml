@@ -3,28 +3,33 @@
 	<groupId>org.apache.manifoldcf</groupId>
 	<artifactId>mcf-sdk</artifactId>
 	<name>Apache ManifoldCF SDK</name>
-	<version>1.0.1</version>
+	<version>1.0.2</version>
 	<packaging>pom</packaging>
 	
 	<properties>
 		<webVersion>4.0</webVersion>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<manifoldcf.version>2.27</manifoldcf.version>
+		<manifoldcf.version>2.28</manifoldcf.version>
+		<manifoldcf.admin.username>admin</manifoldcf.admin.username>
+		<manifoldcf.admin.password>admin</manifoldcf.admin.password>
 		<maven.enforcer.plugin.version>3.5.0</maven.enforcer.plugin.version>
-		<docker-maven-plugin.version>0.45.0</docker-maven-plugin.version>
+		<docker-maven-plugin.version>0.45.1</docker-maven-plugin.version>
 		<maven.compiler.plugin.version>3.13.0</maven.compiler.plugin.version>
 		<maven.compiler.source>11</maven.compiler.source>
 		<maven.compiler.target>11</maven.compiler.target>
 		<maven.resources.plugin.version>3.3.1</maven.resources.plugin.version>
-		<maven.dependency.plugin.version>3.8.0</maven.dependency.plugin.version>
+		<maven.dependency.plugin.version>3.8.1</maven.dependency.plugin.version>
 		<maven.clean.plugin.version>3.4.0</maven.clean.plugin.version>
+		<maven.assembly.plugin.version>3.7.1</maven.assembly.plugin.version>
 		<maven.lifecycle.mapping.plugin.version>1.0.0</maven.lifecycle.mapping.plugin.version>
-		<maven.versions.plugin.version>2.17.1</maven.versions.plugin.version>
+		<maven.versions.plugin.version>2.18.0</maven.versions.plugin.version>
+		<maven.exec.plugin.version>3.5.0</maven.exec.plugin.version>
 		<postgresql.version>13.1</postgresql.version>
 	</properties>
 
 	<build>
+		<finalName>apache-manifoldcf-sdk-${project.version}-src</finalName>
 		<pluginManagement>
 			<plugins>
 				<plugin>
@@ -53,6 +58,11 @@
 					<version>${maven.clean.plugin.version}</version>
 				</plugin>
 				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-assembly-plugin</artifactId>
+					<version>${maven.assembly.plugin.version}</version>
+				</plugin>
+				<plugin>
 					<groupId>io.fabric8</groupId>
 					<artifactId>docker-maven-plugin</artifactId>
 					<version>${docker-maven-plugin.version}</version>
@@ -62,9 +72,34 @@
 			    	<artifactId>versions-maven-plugin</artifactId>
 			    	<version>${maven.versions.plugin.version}</version>
 				</plugin>
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+			        <artifactId>exec-maven-plugin</artifactId>
+			        <version>${maven.exec.plugin.version}</version>
+				</plugin>
 			</plugins>
 		</pluginManagement>
 		<plugins>
+		    <plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<executions>
+                    <execution>
+                        <id>make-distribution</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                        <configuration>
+							<appendAssemblyId>false</appendAssemblyId>
+							<descriptorRefs>
+								<descriptorRef>project</descriptorRef>
+							</descriptorRefs>
+							<tarLongFileMode>gnu</tarLongFileMode>
+                        </configuration>
+                    </execution>
+                </executions>
+			</plugin>
 			<plugin>
 				<artifactId>maven-enforcer-plugin</artifactId>
 				<executions>
@@ -117,6 +152,27 @@
 			<plugin>
 		    	<groupId>org.codehaus.mojo</groupId>
 		    	<artifactId>versions-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+        		<artifactId>exec-maven-plugin</artifactId>
+        		<executions>
+					<execution>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+		          <executable>sign-release-artifacts.sh</executable>
+		          <arguments>
+		            <argument>piergiorgio@apache.org</argument>
+		            <argument>${project.version}</argument>
+		          </arguments>
+		          <environmentVariables>
+		            <LANG>en_US</LANG>
+		          </environmentVariables>
+		        </configuration>
 			</plugin>
 		</plugins>
 	</build>
