@@ -1,4 +1,4 @@
-# Apache ManifoldCF SDK 1.0.2
+# Apache ManifoldCF SDK 1.0.3-SNAPSHOT
 This is the SDK project of Apache ManifoldCF dedicated to developers that need to extend the platform with new components, connectors or integrations using Maven and Docker. On the other hand this SDK can be extremely useful also for all the developers who want to contribute to the ManifoldCF project.
 This project has started with an initial contribution by @OpenPj and @binduwavell.
 
@@ -34,10 +34,14 @@ ManifoldCF SDK is using the ManifoldCF Docker repository:
 
 If you need to build your custom Docker image using dependencies built from the MCF source code and stored in the target folder (using the `init` script mentioned below), please use the `local` Maven profile.
 
-*Using the run-compose.sh script for using official available artifacts*
+*Using Maven commands:
+* `mvn clean install docker:build docker:start -DskipTests -DskipITs` -> Build and run using the official Docker containers
+* `mvn clean install docker:build docker:start -DskipTests -DskipITs -Plocal` -> Build and run using local source code distribution
+
+*run-compose.sh script for using official available artifacts*
 A dedicated script is now provided in order to manage the Docker Compose template included with this SDK: `mcf-docker-overlay/src/main/docker/docker-compose/docker-compose.yml` 
 Below some examples of commands using the run-compose.sh script:
-* `./run-compose.sh build_start` -> build the ManifoldCF 2.26 container deploying a separated container for PostgreSQL with dedicated volume
+* `./run-compose.sh build_start` -> build the ManifoldCF 2.28 container deploying a separated container for PostgreSQL with dedicated volume
 * `./run-compose.sh start` -> start ManifoldCF platform including the crawler and the PostgreSQL database
 * `./run-compose.sh reload_mcf` -> rebuild ManifoldCF container keeping PostgreSQL up and running
 * `./run-compose.sh purge` -> removes the MCF database Docker Volumes
@@ -45,7 +49,7 @@ Below some examples of commands using the run-compose.sh script:
 
 *Using the SDK with local Maven dependencies built from source code*
 Examples of commands using the run bash script for a typical usage:
-* `./run.sh init 2.26 ga` -> start the init process for ManifoldCF 2.27 GA
+* `./run.sh init 2.28 ga` -> start the init process for ManifoldCF 2.28 GA
 * `./run.sh init custom-version local /<USER_HOME>/Documents/workspaces/manifoldcf/custom-project` -> start the init process for a custom ManifoldCF project
 * `./run.sh build_start` -> build extensions and run everything with Docker locally using an official ManifoldCF distribution
 * `./run.sh build_start_local` -> build extensions and run everything with Docker locally using a custom local ManifoldCF source code repository
